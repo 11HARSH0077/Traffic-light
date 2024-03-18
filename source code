@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Changing Circles</title>
+  <style>
+    #container {
+      width: 300px;
+      height: 150px;
+      /* Adjusted height */
+      position: relative;
+      margin: 50px auto;
+      border: 1px solid black;
+      background-color: black;
+      /* Changed background color */
+      display: flex;
+      justify-content: space-between;
+      /* Changed alignment */
+      align-items: center;
+      padding: 20px;
+      /* Added padding */
+    }
+
+    .circle {
+      width: 50px;
+      /* Adjusted circle size */
+      height: 50px;
+      /* Adjusted circle size */
+      border-radius: 50%;
+      background-color: grey;
+    }
+
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div class="circle" id="circle1"></div>
+    <div class="circle" id="circle2"></div>
+    <div class="circle" id="circle3"></div>
+  </div>
+
+  <button onclick="changeColor('red')">Red</button>
+  <button onclick="changeColor('yellow')">Yellow</button>
+  <button onclick="changeColor('green')">Green</button>
+  <button onclick="changeColor('blue')">Blue</button>
+  <button onclick="altColor()">Alt</button>
+  <script>
+    var altColorTimeout; // Declare a variable to store the timeout ID
+    function changeColor(color) {
+      // Clear the timeout if it exists
+      clearTimeout(altColorTimeout);
+      var circles = document.querySelectorAll(".circle");
+      if (color === 'red') {
+        circles[0].style.backgroundColor = 'red';
+        circles[1].style.backgroundColor = 'grey';
+        circles[2].style.backgroundColor = 'grey';
+      } else if (color === 'yellow') {
+        circles[0].style.backgroundColor = 'grey';
+        circles[1].style.backgroundColor = 'yellow';
+        circles[2].style.backgroundColor = 'grey';
+      } else if (color === 'green') {
+        circles[0].style.backgroundColor = 'grey';
+        circles[1].style.backgroundColor = 'grey';
+        circles[2].style.backgroundColor = 'green';
+      } else if (color === 'blue') {
+        circles[0].style.backgroundColor = 'blue';
+        circles[1].style.backgroundColor = 'blue';
+        circles[2].style.backgroundColor = 'blue';
+      }
+    }
+
+    function altColor() {
+      var circles = document.querySelectorAll(".circle");
+      var currentColorIndex = 0; // To track the current color index
+      // Define the color sequence
+      var colors = ['red', 'yellow', 'green'];
+      // Clear any existing timeout
+      clearTimeout(altColorTimeout);
+      // Loop through colors with delay
+      function loopColors() {
+        altColorTimeout = setTimeout(function() {
+          // Reset all circles to grey
+          for (var i = 0; i < circles.length; i++) {
+            circles[i].style.backgroundColor = 'grey';
+          }
+          // Set the current circle to the next color in the sequence
+          circles[currentColorIndex].style.backgroundColor = colors[currentColorIndex];
+          // Move to the next color index
+          currentColorIndex = (currentColorIndex + 1) % colors.length;
+          // Call loopColors recursively
+          loopColors();
+        }, 1000); // Delay of 1 second
+      }
+      // Start the loop
+      loopColors();
+    }
+  </script>
+</body>
+
+</html>
